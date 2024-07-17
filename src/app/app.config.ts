@@ -2,7 +2,11 @@ import {
   ApplicationConfig,
   provideExperimentalZonelessChangeDetection,
 } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import {
+  PreloadAllModules,
+  provideRouter,
+  withPreloading,
+} from '@angular/router';
 import {
   provideHttpClient,
   withInterceptorsFromDi,
@@ -12,7 +16,7 @@ import { routes } from './app.routes';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideExperimentalZonelessChangeDetection(),
-    provideRouter(routes),
+    provideRouter(routes, withPreloading(PreloadAllModules)),
     provideHttpClient(withInterceptorsFromDi()),
   ],
 };

@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { Product } from '../interfaces/Product';
 
 @Component({
@@ -15,7 +15,7 @@ import { Product } from '../interfaces/Product';
       </thead>
       <tbody>
         @for (product of products(); track product.id) {
-          <tr>
+          <tr (click)="onSelected.emit(product.id)">
             <td>{{ product.sku }}</td>
             <td>{{ product.title }}</td>
           </tr>
@@ -31,4 +31,6 @@ import { Product } from '../interfaces/Product';
 })
 export class ProductsListComponent {
   readonly products = input.required<Product[]>();
+
+  onSelected = output<number | undefined>();
 }

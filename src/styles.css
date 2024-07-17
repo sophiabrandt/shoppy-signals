@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 :root {
-  --measure: 60ch;
+  --measure: 80ch;
 }
 
 .center {
@@ -14,4 +14,37 @@
   border: 2px solid red;
   border-radius: 0.5rem;
   background-color: lightsalmon;
+}
+
+.with-sidebar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.with-sidebar > :first-child {
+  flex-grow: 1;
+}
+
+.with-sidebar > :last-child {
+  flex-basis: 0;
+  flex-grow: 999;
+  min-inline-size: 50%;
+}
+
+.frame {
+  --n: 16;
+  --d: 9;
+  aspect-ratio: var(--n) / var(--d);
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.frame > img,
+.frame > video {
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
 }
