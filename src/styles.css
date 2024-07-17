@@ -1,1 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+  --measure: 60ch;
+}
+
+.center {
+  box-sizing: content-box;
+  margin-inline: auto;
+  max-inline-size: var(--measure);
+}
+
+.error {
+  padding: 0.5rem;
+  border: 2px solid red;
+  border-radius: 0.5rem;
+  background-color: lightsalmon;
+}
