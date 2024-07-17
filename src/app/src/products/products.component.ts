@@ -11,9 +11,9 @@ import { ProductsService } from './data-access/products.service';
     <section class="center with-sidebar">
       @if (productsService.loading()) {
         <div>Loading...</div>
-      } @else if (productsService.error()) {
+      } @else if (productsService.productsError()) {
         <div class="error" role="alert">
-          Error: {{ productsService.error() }}
+          Error: {{ productsService.productsError() }}
         </div>
       } @else {
         <app-products-list
@@ -21,18 +21,16 @@ import { ProductsService } from './data-access/products.service';
           [selectedProduct]="productsService.selectedProduct()"
           (onSelected)="onSelected($event)"
         />
-      }
-      @if (productsService.loading()) {
-        <div>Loading...</div>
-      } @else if (productsService.error()) {
-        <div class="error" role="alert">
-          Error: {{ productsService.error() }}
-        </div>
-      } @else {
-        <app-products-detail
-          [product]="productsService.selectedProduct()"
-          (onSelected)="onSelected($event)"
-        />
+        @if (productsService.selectedProductError()) {
+          <div class="error" role="alert">
+            Error: {{ productsService.selectedProductError() }}
+          </div>
+        } @else {
+          <app-products-detail
+            [product]="productsService.selectedProduct()"
+            (onSelected)="onSelected($event)"
+          />
+        }
       }
     </section>
   `,

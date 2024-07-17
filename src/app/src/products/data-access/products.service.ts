@@ -18,7 +18,8 @@ export interface ProductsState {
   products: Product[];
   loading: boolean;
   selectedProduct?: Product;
-  error?: string;
+  productsError?: string;
+  selectedProductError?: string;
 }
 
 @Injectable({
@@ -40,21 +41,23 @@ export class ProductsService {
   // selectors
   products = computed(() => this.state().products);
   loading = computed(() => this.state().loading);
-  error = computed(() => this.state().error);
+  productsError = computed(() => this.state().productsError);
   selectedProduct = computed(() => this.state().selectedProduct);
+  selectedProductError = computed(() => this.state().selectedProductError);
 
   // actions
   private selectedProductId = signal<number | undefined>(undefined);
 
   // sources
-  private error$ = new Subject<string | undefined>();
+  private productsError$ = new Subject<string | undefined>();
+  private selectedProductError$ = new Subject<string | undefined>();
   private readonly products$ = this.http
     .get<PaginatedProducts>('https://dummyjson.com/products?limit=10&skip=0')
     .pipe(
       map((p) => ({ products: p.products as Product[], loading: false })),
       shareReplay({ bufferSize: 1, refCount: true }),
       catchError((error) => {
-        this.handleError(error);
+        this.handleError(this.productsError$, error);
         return EMPTY;
       }),
     );
@@ -66,7 +69,7 @@ export class ProductsService {
             map((p) => ({ selectedProduct: p, loading: false })),
             shareReplay({ bufferSize: 1, refCount: true }),
             catchError((error) => {
-              this.handleError(error);
+              this.handleError(this.selectedProductError$, error);
               return EMPTY;
             }),
           );
@@ -85,7 +88,10 @@ export class ProductsService {
           loading: p.loading,
         })),
       ),
-      this.error$.pipe(map((error) => ({ error }))),
+      this.productsError$.pipe(map((error) => ({ productsError: error }))),
+      this.selectedProductError$.pipe(
+        map((error) => ({ selectedProductError: error })),
+      ),
     );
 
     connect(this.state).with(nextState$);
@@ -95,11 +101,14 @@ export class ProductsService {
     this.selectedProductId.set(id);
   }
 
-  private handleError(error: HttpErrorResponse) {
+  private handleError(
+    subject: Subject<string | undefined>,
+    error: HttpErrorResponse,
+  ) {
     if (error.status === 404 && error.url) {
-      this.error$.next(`Failed to load products`);
+      subject.next(`Failed to load products from ${error.url}`);
       return;
     }
-    this.error$.next(error.statusText);
+    subject.next(error.statusText);
   }
 }
