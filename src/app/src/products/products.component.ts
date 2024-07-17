@@ -18,6 +18,7 @@ import { ProductsService } from './data-access/products.service';
       } @else {
         <app-products-list
           [products]="productsService.products()"
+          [selectedProduct]="productsService.selectedProduct()"
           (onSelected)="onSelected($event)"
         />
       }

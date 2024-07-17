@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 :root {
   --measure: 80ch;
+  --chimera-css-blues__color-focus: hsl(210, 100%, 70%);
 }
 
 .center {

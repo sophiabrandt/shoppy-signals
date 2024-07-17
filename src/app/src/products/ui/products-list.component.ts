@@ -6,31 +6,45 @@ import { Product } from '../interfaces/Product';
   standalone: true,
   imports: [],
   template: `
-    <table>
-      <thead>
-        <tr>
-          <th scope="col">SKU</th>
-          <th scope="col">Name</th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (product of products(); track product.id) {
-          <tr (click)="onSelected.emit(product.id)">
-            <td>{{ product.sku }}</td>
-            <td>{{ product.title }}</td>
+    @if (!products().length) {
+      <article>
+        <p>No data</p>
+      </article>
+    } @else {
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">SKU</th>
+            <th scope="col">Name</th>
           </tr>
-        }
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          @for (product of products(); track product.id) {
+            <tr
+              [class]="selectedProduct()?.id === product.id ? 'selected' : ''"
+              (click)="onSelected.emit(product.id)"
+            >
+              <td>{{ product.sku }}</td>
+              <td>{{ product.title }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
   `,
   styles: `
     td {
       cursor: pointer;
     }
+
+    .selected {
+      background-color: var(--chimera-css-blues__color-focus);
+    }
   `,
 })
 export class ProductsListComponent {
   readonly products = input.required<Product[]>();
+  readonly selectedProduct = input.required<Product | undefined>();
 
   onSelected = output<number | undefined>();
 }
