@@ -1,0 +1,53 @@
+{
+  "lockfile_version": "1",
+  "packages": {
+    "volta@latest": {
+      "last_modified": "2024-07-07T07:43:47Z",
+      "resolved": "github:NixOS/nixpkgs/b60793b86201040d9dee019a05089a9150d08b5b#volta",
+      "source": "devbox-search",
+      "version": "1.1.1",
+      "systems": {
+        "aarch64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/bnkaj6xfdy2b31xpq3xv8vj0r10mvhlk-volta-1.1.1",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/bnkaj6xfdy2b31xpq3xv8vj0r10mvhlk-volta-1.1.1"
+        },
+        "aarch64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/4w9jyjnlx52hv99k2asllpkmivgw4fw7-volta-1.1.1",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/4w9jyjnlx52hv99k2asllpkmivgw4fw7-volta-1.1.1"
+        },
+        "x86_64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/5j6vk22k69vr4zr4h7vixh4yh0d4gnrk-volta-1.1.1",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/5j6vk22k69vr4zr4h7vixh4yh0d4gnrk-volta-1.1.1"
+        },
+        "x86_64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/k9dpvyrgrbqc5qqjg2542af5bqzxrjk3-volta-1.1.1",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/k9dpvyrgrbqc5qqjg2542af5bqzxrjk3-volta-1.1.1"
+        }
+      }
+    }
+  }
+}
