@@ -1,12 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { ProductsListComponent } from './ui/products-list.component';
-import { ProductsDetailComponent } from './ui/products-detail.component';
 import { ProductsService } from './data-access/products.service';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [ProductsListComponent, ProductsDetailComponent],
+  imports: [ProductsListComponent, RouterOutlet],
   template: `
     <section class="center with-sidebar">
       @if (productsService.loading()) {
@@ -21,16 +21,7 @@ import { ProductsService } from './data-access/products.service';
           [selectedProduct]="productsService.selectedProduct()"
           (onSelected)="onSelected($event)"
         />
-        @if (productsService.selectedProductError()) {
-          <div class="error" role="alert">
-            Error: {{ productsService.selectedProductError() }}
-          </div>
-        } @else {
-          <app-products-detail
-            [product]="productsService.selectedProduct()"
-            (onSelected)="onSelected($event)"
-          />
-        }
+        <router-outlet></router-outlet>
       }
     </section>
   `,

@@ -1,16 +1,20 @@
-import { Component, input, output } from '@angular/core';
-import { Product } from '../interfaces/Product';
+import { Component, inject, input, output } from '@angular/core';
 import { CurrencyPipe, NgOptimizedImage } from '@angular/common';
+import { Product } from '../interfaces/Product';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-products-detail',
   standalone: true,
-  imports: [NgOptimizedImage, CurrencyPipe],
+  imports: [NgOptimizedImage, CurrencyPipe, RouterModule],
   template: `
     <article>
       @if (product()) {
         <div class="close-view">
-          <button type="button" (click)="onSelected.emit(undefined)">
+          <button
+            type="button"
+            (click)="onSelected.emit(undefined); router.navigate(['/products'])"
+          >
             Close
           </button>
         </div>
@@ -28,8 +32,6 @@ import { CurrencyPipe, NgOptimizedImage } from '@angular/common';
           <p>rating: {{ product()?.rating }}</p>
         </div>
         <p>{{ product()?.description }}</p>
-      } @else {
-        <p>No product selected</p>
       }
     </article>
   `,
@@ -50,6 +52,7 @@ import { CurrencyPipe, NgOptimizedImage } from '@angular/common';
   `,
 })
 export class ProductsDetailComponent {
+  readonly router = inject(Router);
   readonly product = input.required<Product | undefined>();
 
   onSelected = output<number | undefined>();

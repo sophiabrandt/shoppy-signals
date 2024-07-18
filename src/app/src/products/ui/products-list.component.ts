@@ -1,10 +1,11 @@
 import { Component, input, output } from '@angular/core';
 import { Product } from '../interfaces/Product';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-products-list',
   standalone: true,
-  imports: [],
+  imports: [RouterLink],
   template: `
     @if (!products().length) {
       <article>
@@ -21,6 +22,7 @@ import { Product } from '../interfaces/Product';
         <tbody>
           @for (product of products(); track product.id) {
             <tr
+              routerLink="/products/{{ product.id }}"
               [class]="selectedProduct()?.id === product.id ? 'selected' : ''"
               (click)="onSelected.emit(product.id)"
             >
